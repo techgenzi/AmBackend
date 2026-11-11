@@ -1,0 +1,67 @@
+FROM python:3.10-slim
+
+LABEL maintainer="vijay A"
+
+
+RUN apt-get update && apt-get install -y supervisor nginx git
+
+RUN pip install --upgrade pip setuptools packaging
+
+
+RUN useradd -ms /bin/bash api
+WORKDIR /
+
+
+COPY ./amdev_deployment/requirements.txt .
+RUN pip3 install -r requirements.txt
+RUN pip3 install git+https://${GITHUB_TOKEN}@github.com/ekalaiv/IpssApiUtils.git --upgrade
+RUN pip3 install boto3
+RUN pip3 install botocore
+RUN pip3 install pandas
+RUN pip3 install sqlalchemy-json
+
+COPY bill_of_material bill_of_material
+COPY Vendors Vendors
+COPY customer_purchase customer_purchase
+COPY grnotes grnotes
+COPY joborder joborder
+COPY package_collections package_collections
+COPY delivery delivery
+COPY execution_log execution_log
+COPY production_execution production_execution
+COPY production_plans production_plans
+COPY production_stages production_stages
+COPY invregistry invregistry
+COPY Base_Config Base_Config
+COPY production_config production_config
+COPY bom_config bom_config
+COPY floor_stage_mapping floor_stage_mapping
+COPY sequence sequence
+COPY order_services order_services
+COPY dispatch dispatch
+COPY return_material return_material
+COPY packing_process packing_process
+COPY qualityCheck qualityCheck
+COPY hourly_target hourly_target
+COPY order_reports order_reports
+COPY dashboard dashboard
+COPY apk_upload apk_upload
+COPY store_location store_location
+COPY labour labour
+COPY material_cost material_cost
+COPY mark mark
+COPY cost_estimation cost_estimation
+COPY activity_stage_map activity_stage_map
+COPY line_machine_config line_machine_config
+COPY notification notification
+COPY custome_config custome_config 
+COPY mcp_server mcp_server
+COPY chat_agent chat_agent
+
+COPY ./amdev_deployment/nginx-conf /etc/nginx/conf.d/default.conf
+
+COPY ./amdev_deployment/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+
+EXPOSE 80
+
+CMD ["supervisord","-c","/etc/supervisor/conf.d/supervisord.conf"]

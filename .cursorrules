@@ -1,0 +1,41 @@
+# Agent Instructions
+
+## Session Initialization
+- ALWAYS read `README.md` at the start of every new chat or agent session.
+- Understand the scope of the current module you are working in (each top-level directory is a separate service).
+- **DO NOT** make any changes to `nginx-conf` or `supervisord.conf` files (usually found in `amdev_deployment/`).
+
+
+## Coding Standards
+- **Backend**: Python 3.x, Flask, SQLAlchemy.
+- **API**: Use `flask-restx` for documentation and request parsing.
+- **Database**: Use SQLAlchemy ORM with PostgreSQL.
+- **Design Patterns**: Maintain the microservices-style separation between folders.
+
+## Communication Style
+- Be concise and technical.
+- Provide code snippets followed by brief explanations.
+- Always check if a similar pattern exists in another module before proposing a new approach.
+
+## Field/Schema Management
+- Whenever a new field or table is added/removed, you **MUST** update all layers of the service to prevent the "Distributed Schema Gap":
+    1.  **Database Model**: Update the SQLAlchemy class in `app/models/`. Use `NestedMutableJson` for JSONB columns.
+    2.  **API Documentation**: Update the `flask-restx` fields in `app/api_doc.py` or `app/routes/`.
+    3.  **API Implementation**: 
+        - Ensure `POST/PUT` methods save the field. Check if the field is being `pop()`ed unexpectedly before saving.
+        - Update **Raw SQL Queries** in `GET` methods. Prefer `SELECT t.*` where appropriate, otherwise manually add the new column to the SELECT list and the `GROUP BY` clause.
+    4.  **Response Models**: Update **ALL** relevant `marshal_with` models (list views, single views, and reports) to ensure the field is visible in the API response.
+    5.  **Migration Scripts**: Provide explicit `ALTER TABLE table_name ADD COLUMN IF NOT EXISTS column_name type;` SQL scripts. **DO NOT** rely on `db_client.create_all()` for schema updates on existing tables.
+    6.  **End-to-End Sync**: If a feature spans multiple microservices (e.g., Serialization), verify that the field is handled consistently across all involved services (e.g., `production_config`, `production_stages`, and `execution_log`).
+
+## Database & Connection Safety
+- **Environment Awareness**:
+  - ALWAYS check the environment configuration (e.g., `.env`, `env.dev`, `PROD_DB_URL`) to identify where the database is running (Local Dev, Remote Dev/Staging, or Production).
+  - Ensure any data-modifying scripts (INSERT, UPDATE, DELETE, ALTER TABLE, CREATE TRIGGER) are executed ONLY in the development environment (local or remote dev) first.
+  - Never run untested DDL/DML scripts directly against the Production database.
+- **Connection & Session Management**:
+  - Always manage database connections properly. Use context managers (`with db_client.session.begin():`) or explicit session closing (`session.close()`) to ensure connections are returned to the pool.
+  - ALWAYS handle exceptions with transaction rollbacks (`session.rollback()`) and clear session states (`session.flush()`) in error blocks to prevent connection leaks, lock contention, or "too many connections" issues.
+- **DML/DDL Script Review**:
+  - Before executing any SQL script or migration, review it for potential crashes, table-wide locking issues (e.g., bulk updates on large tables causing lock escalations or deadlocks), infinite trigger recursion loops, division by zero (`NULLIF` division safety), and integer division issues.
+

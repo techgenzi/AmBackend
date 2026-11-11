@@ -1,0 +1,437 @@
+server {
+    listen       8080;
+    server_name  _;
+
+    add_header 'Access-Control-Allow-Origin' '*' always;
+        add_header 'Access-Control-Allow-Methods' 'GET, POST, OPTIONS, PATCH, PUT, DELETE';
+        add_header 'Access-Control-Allow-Headers' 'DNT,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range,Authorization';
+
+    proxy_set_header Host $host;
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header X-Forwarded-Proto $scheme;
+
+    location /swaggerui {
+        proxy_pass http://127.0.0.1:5000;
+    }
+
+    location /am-configTypes {
+        proxy_pass   http://127.0.0.1:5000;
+    }
+
+    location = /am-configTypes/swagger.json {
+        proxy_pass   http://127.0.0.1:5000/swagger.json;
+    }
+
+    location /am-products {
+        proxy_pass   http://127.0.0.1:5001;
+    }
+
+    location = /am-products/swagger.json {
+        proxy_pass   http://127.0.0.1:5001/swagger.json;
+    }
+
+    location /am-bom {
+        proxy_pass   http://127.0.0.1:5002;
+    }
+
+    location = /am-bom/swagger.json {
+        proxy_pass   http://127.0.0.1:5002/swagger.json;
+    }
+
+    location /am-vendors {
+        proxy_pass   http://127.0.0.1:5003;
+    }
+
+    location = /am-vendors/swagger.json {
+        proxy_pass   http://127.0.0.1:5003/swagger.json;
+    }
+    
+    location /am-asset_mapping {
+        proxy_pass   http://127.0.0.1:5004;
+    }
+
+    location = /am-asset_mapping/swagger.json {
+        proxy_pass   http://127.0.0.1:5004/swagger.json;
+    }
+
+    location /am-customer-purchase-order {
+        proxy_pass   http://127.0.0.1:5005;
+    }
+
+    location = /am-customer-purchase-order/swagger.json {
+        proxy_pass   http://127.0.0.1:5005/swagger.json;
+    }
+
+    location /am-grnotes {
+        proxy_pass   http://127.0.0.1:5006;
+    }
+
+    location = /am-grnotes/swagger.json {
+        proxy_pass   http://127.0.0.1:5006/swagger.json;
+    }
+
+    location /am-job_order {
+        proxy_pass   http://127.0.0.1:5007;
+    }
+
+    location = /am-job_order/swagger.json {
+        proxy_pass   http://127.0.0.1:5007/swagger.json;
+    }
+
+    location /am-package_collections {
+        proxy_pass   http://127.0.0.1:5008;
+    }
+
+    location = /am-package_collections/swagger.json {
+        proxy_pass   http://127.0.0.1:5008/swagger.json;
+    }
+
+    location /am-delivery {
+        proxy_pass   http://127.0.0.1:5009;
+    }
+
+    location = /am-delivery/swagger.json {
+        proxy_pass   http://127.0.0.1:5009/swagger.json;
+    }
+
+    location /execution_log {
+        proxy_pass   http://127.0.0.1:5010;
+    }
+
+    location = /execution_log/swagger.json {
+        proxy_pass   http://127.0.0.1:5010/swagger.json;
+    }
+
+    location /am-prod_exe {
+        proxy_pass   http://127.0.0.1:5011;
+    }
+
+    location = /am-prod_exe/swagger.json {
+        proxy_pass   http://127.0.0.1:5011/swagger.json;
+    }
+
+    location /am-prod_plans {
+        proxy_pass   http://127.0.0.1:5012;
+    }
+
+    location = /am-prod_plans/swagger.json {
+        proxy_pass   http://127.0.0.1:5012/swagger.json;
+    }
+
+    location /am-prod_stages {
+        proxy_pass   http://127.0.0.1:5013;
+    }
+
+    location = /am-prod_stages/swagger.json {
+        proxy_pass   http://127.0.0.1:5013/swagger.json;
+    }
+
+    location /am-invregistry {
+        proxy_pass   http://127.0.0.1:5014;
+    }
+
+    location = /am-invregistry/swagger.json {
+        proxy_pass   http://127.0.0.1:5014/swagger.json;
+    }
+
+    location /attribute_group {
+        proxy_pass   http://127.0.0.1:5015;
+    }
+
+    location = /attribute_group/swagger.json {
+        proxy_pass   http://127.0.0.1:5015/swagger.json;
+    }
+
+    location /attribute_meta_data {
+        proxy_pass   http://127.0.0.1:5016;
+    }
+
+    location = /attribute_meta_data/swagger.json {
+        proxy_pass   http://127.0.0.1:5016/swagger.json;
+    }
+
+    location /product_attribute {
+        proxy_pass   http://127.0.0.1:5017;
+    }
+
+    location = /product_attribute/swagger.json {
+        proxy_pass   http://127.0.0.1:5017/swagger.json;
+    }
+
+    location /product_group {
+        proxy_pass   http://127.0.0.1:5018;
+    }
+
+    location = /product_group/swagger.json {
+        proxy_pass   http://127.0.0.1:5018/swagger.json;
+    }
+
+    location /product_variant {
+        proxy_pass   http://127.0.0.1:5020;
+    }
+
+    location = /product_variant/swagger.json {
+        proxy_pass   http://127.0.0.1:5020/swagger.json;
+    }
+
+    location /products {
+        proxy_pass   http://127.0.0.1:5021;
+    }
+
+    location = /products/swagger.json {
+        proxy_pass   http://127.0.0.1:5021/swagger.json;
+    }
+
+    location /variant_attribute {
+        proxy_pass   http://127.0.0.1:5022;
+    }
+
+    location = /variant_attribute/swagger.json {
+        proxy_pass   http://127.0.0.1:5022/swagger.json;
+    }
+
+    location /variant_value {
+        proxy_pass   http://127.0.0.1:5023;
+    }
+
+    location = /variant_value/swagger.json {
+        proxy_pass   http://127.0.0.1:5023/swagger.json;
+    }
+
+    location /baseConfig {
+        proxy_pass   http://127.0.0.1:5024;
+    }
+
+    location = /baseConfig/swagger.json {
+        proxy_pass   http://127.0.0.1:5024/swagger.json;
+    }
+
+    location /production_config {
+        proxy_pass   http://127.0.0.1:5025;
+    }
+
+    location = /production_config/swagger.json {
+        proxy_pass   http://127.0.0.1:5025/swagger.json;
+    }
+
+    location /am-asset_config {
+        proxy_pass   http://127.0.0.1:5026;
+    }
+
+    location = /am-asset_config/swagger.json {
+        proxy_pass   http://127.0.0.1:5026/swagger.json;
+    }
+
+    location /am-floor_stage_config {
+        proxy_pass   http://127.0.0.1:5027;
+    }
+
+    location = /am-floor_stage_config/swagger.json {
+        proxy_pass   http://127.0.0.1:5027/swagger.json;
+    }
+
+    location /am-product_group_seq {
+        proxy_pass   http://127.0.0.1:5028;
+    }
+
+    location = /am-product_group_seq/swagger.json {
+        proxy_pass   http://127.0.0.1:5028/swagger.json;
+    }
+
+    location /am-order-Services {
+        proxy_pass   http://127.0.0.1:5029;
+    }
+
+    location = /am-order-Services/swagger.json {
+        proxy_pass   http://127.0.0.1:5029/swagger.json;
+    }
+
+    location /am-dispatch-module {
+        proxy_pass   http://127.0.0.1:5030;
+    }
+
+    location = /am-dispatch-module/swagger.json {
+        proxy_pass   http://127.0.0.1:5030/swagger.json;
+    }
+
+    location /am-returnMaterial {
+        proxy_pass   http://127.0.0.1:5031;
+    }
+
+    location = /am-returnMaterial/swagger.json {
+        proxy_pass   http://127.0.0.1:5031/swagger.json;
+    }
+
+    location /am-qualitycheck {
+        proxy_pass   http://127.0.0.1:5032;
+    }
+
+    location = /am-qualitycheck/swagger.json {
+        proxy_pass   http://127.0.0.1:5032/swagger.json;
+    }
+
+    location /hourly_target {
+        proxy_pass   http://127.0.0.1:5033;
+    }
+
+    location = /hourly_target/swagger.json {
+        proxy_pass   http://127.0.0.1:5033/swagger.json;
+    }
+
+    location /am-order-reports {
+        proxy_pass   http://127.0.0.1:5034;
+    }
+
+    location = /am-order-reports/swagger.json {
+        proxy_pass   http://127.0.0.1:5034/swagger.json;
+    }
+
+    location /am-dashboard {
+        proxy_pass   http://127.0.0.1:5035;
+    }
+
+    location = /am-dashboard/swagger.json {
+        proxy_pass   http://127.0.0.1:5035/swagger.json;
+    }
+
+    location /paking_process {
+        proxy_pass   http://127.0.0.1:5036;
+    }
+
+    location = /paking_process/swagger.json {
+        proxy_pass   http://127.0.0.1:5036/swagger.json;
+    }
+
+    location /am-apk_upload {
+        proxy_pass   http://127.0.0.1:5037;
+    }
+
+    location = /am-apk_upload/swagger.json {
+        proxy_pass   http://127.0.0.1:5037/swagger.json;
+    }
+
+    location /am-store {
+        proxy_pass   http://127.0.0.1:5038;
+    }
+
+    location = /am-store/swagger.json {
+        proxy_pass   http://127.0.0.1:5038/swagger.json;
+    }
+
+    location /am-labour {
+        proxy_pass   http://127.0.0.1:5039;
+    }
+
+    location = /am-labour/swagger.json {
+        proxy_pass   http://127.0.0.1:5039/swagger.json;
+    }
+
+    location /am-material_cost {
+        proxy_pass   http://127.0.0.1:5040;
+    }
+
+    location = /am-material_cost/swagger.json {
+        proxy_pass   http://127.0.0.1:5040/swagger.json;
+    }
+
+    location /am-mark {
+        proxy_pass   http://127.0.0.1:5041;
+    }
+
+    location = /am-mark/swagger.json {
+        proxy_pass   http://127.0.0.1:5041/swagger.json;
+    }
+
+    location /am-cost_estimation {
+        proxy_pass   http://127.0.0.1:5042;
+    }
+
+    location = /am-cost_estimation/swagger.json {
+        proxy_pass   http://127.0.0.1:5042/swagger.json;
+    }
+
+    location /activity_stage_map {
+        proxy_pass   http://127.0.0.1:5043;
+    }
+
+    location = /activity_stage_map/swagger.json {
+        proxy_pass   http://127.0.0.1:5043/swagger.json;
+    }
+
+    location /line {
+        proxy_pass   http://127.0.0.1:5044;
+    }
+
+    location = /line/swagger.json {
+        proxy_pass   http://127.0.0.1:5044/swagger.json;
+    }
+
+    location /notification {
+        proxy_pass   http://127.0.0.1:5045;
+    }
+
+    location = /notification/swagger.json {
+        proxy_pass   http://127.0.0.1:5045/swagger.json;
+    }
+
+   
+
+    location /socket.io/ {
+        # Prevent inheriting global CORS headers so we don't duplicate the backend's CORS headers
+        add_header 'X-Backend-CORS' 'true' always;
+
+        proxy_set_header Connection $http_connection;
+
+        proxy_pass http://127.0.0.1:5045;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_buffering off;
+        proxy_read_timeout 86400s;
+        proxy_send_timeout 86400s;
+        proxy_cache_bypass $http_upgrade;                 # ← Change 2: add this
+    }
+
+    location /custome_config {
+        proxy_pass   http://127.0.0.1:5046;
+    }
+
+    location = /custome_config/swagger.json {
+        proxy_pass   http://127.0.0.1:5046/swagger.json;
+    }
+
+
+  
+    location /mcp/ {
+        proxy_pass http://127.0.0.1:5047/;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_read_timeout 86400s;
+        proxy_send_timeout 86400s;
+        proxy_buffering off;
+    }
+
+    location /fabrico/chatAgent {
+        proxy_pass   http://127.0.0.1:5048;
+         # Add these 3 lines:
+        proxy_read_timeout 600s;
+        proxy_connect_timeout 600s;
+        proxy_send_timeout 600s;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+    }
+
+    location = /fabrico/chatAgent/swagger.json {
+        proxy_pass   http://127.0.0.1:5048/swagger.json;
+    }
+
+  }
