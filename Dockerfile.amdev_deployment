@@ -14,7 +14,7 @@ WORKDIR /
 
 COPY ./amdev_deployment/requirements.txt .
 RUN pip3 install -r requirements.txt
-RUN pip3 install git+https://${GITHUB_TOKEN}@github.com/ekalaiv/IpssApiUtils.git --upgrade
+RUN pip3 install git+https://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@github.com/ekalaiv/IpssApiUtils.git --upgrade
 RUN pip3 install boto3
 RUN pip3 install botocore
 RUN pip3 install pandas
